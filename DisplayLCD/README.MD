@@ -2,11 +2,11 @@
 
 Biblioteca para uso de um display LCD 16x2 com uma placa de desenvolvimento ARM Nucleo F411RE.
 
-No ```main.c``` temos um pequeno exemplo de uso. Na sua aplicaÁ„o ser· necess·rio utilizar apenas os arquivos ```lcd.h``` e ```lcd.c```.
+No ```main.c``` temos um pequeno exemplo de uso. Na sua aplica√ß√£o ser√° necess√°rio utilizar apenas os arquivos ```lcd.h``` e ```lcd.c```.
 
 - - -
 
-## InstruÁıes de uso
+## Instru√ß√µes de uso
 
 Primeiramente, importamos a biblioteca
 
@@ -14,15 +14,15 @@ Primeiramente, importamos a biblioteca
 	#include "lcd.h"
 ```
 
-Inicializamos o clock da _GPIO_ a ser utilizado. A biblioteca (ainda) n„o faz isso sozinha.
+Inicializamos o clock da _GPIO_ a ser utilizado. A biblioteca (ainda) n√£o faz isso sozinha.
 
 ```c
 	__GPIOA_CLK_ENABLE();
 ```
 
 Depois, configuramos o display. Utilizamos a estrutura global ```LCD```, definida no header ```lcd.h```. 
-… necess·rio configurar os pinos de _enable_, _RS_ e os pinos de dados, alÈm da porta onde est„o conectados.
-AtÈ o presente momento È necess·rio que todos os pinos estejam na mesma porta.
+√â necess√°rio configurar os pinos de _enable_, _RS_ e os pinos de dados, al√©m da porta onde est√£o conectados.
+At√© o presente momento √© necess√°rio que todos os pinos estejam na mesma porta.
 
 ```c
 	LCD.enable = GPIO_PIN_0;
@@ -34,22 +34,39 @@ AtÈ o presente momento È necess·rio que todos os pinos estejam na mesma porta.
 	LCD.porta = GPIOA;
 ```
 
-Por ˙ltimo, chamamos a funÁ„o de inicializaÁ„o, sem argumentos:
+Por √∫ltimo, chamamos a fun√ß√£o de inicializa√ß√£o, sem argumentos:
 
 ```c	
 	init_display();
 ```
 
-ApÛs isso, as seguintes funÁıes estar„o disponÌveis:
+Ap√≥s isso, as seguintes fun√ß√µes estar√£o dispon√≠veis:
 
 ```c
-clear(void) // Limpa o display (cuidado, funÁ„o bastante lenta)
+clear(void) // Limpa o display (cuidado, fun√ß√£o bastante lenta)
 printf(const char* format, ...) // mesmo printf da stdlib
 gotoxy(int x, int y) // move o cursor para dado ponto da tela
 ```
 - - -
+## Liga√ß√£o el√©trica
 
-## Mini-exemplo (n„o testado)
+Para o exemplo acima, o display deve ser ligado conforme o seguinte:
+
+|  ARM  | LCD |
+| ----- | --- |
+| GND   | RW  |
+| GND   | VO  |
+| PA0   | EN  |
+| PA1   | RS  |
+| PA5   | D4  |
+| PA6   | D5  |
+| PA7   | D6  |
+| PA8   | D7  |
+
+N√£o se esque√ßa tamb√©m de alimentar o display corretamente, conferindo a pinagem espec√≠fica de seu display.
+
+- - -
+## Mini-exemplo (n√£o testado)
 
 ```c
 #include "stm32f4xx.h"
@@ -61,7 +78,7 @@ int main(void)
 {
 	HAL_Init();
 
-	// ConfiguraÁ„o e inicializaÁ„o do display
+	// Configura√ß√£o e inicializa√ß√£o do display
 	LCD.enable = GPIO_PIN_0;
 	LCD.rs = GPIO_PIN_1;
 	LCD.pinos[0] = GPIO_PIN_5;
